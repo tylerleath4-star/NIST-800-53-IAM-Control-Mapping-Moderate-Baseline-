@@ -182,9 +182,9 @@ This project focuses on NIST 800-53 Rev. 5. The following cross-references are i
 
 ## Author
 
-**Tyler Leath**  
+**Tyler Leath**    
 GRC & IAM Security | Microsoft SC-300 (In Progress)  
-[LinkedIn](#) | [GitHub](#)
+[LinkedIn](https://www.linkedin.com/in/tyler-leath-a93781143) | [GitHub](https://github.com/tylerleath4-star)
 
 ---
 
