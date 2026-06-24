@@ -163,10 +163,19 @@ Each control is documented using a consistent template:
 
 ## Mapping Summary
 
-The [`/mappings/IAM-control-mapping.csv`](mappings/IAM-control-mapping.csv) file contains the master mapping table with the following columns:
-
-| Control ID | Control Name | Family | Baseline | Mapped Tool | Implementation Notes | Evidence Artifact | Status |
+| Control ID | Control Name | Family | Baseline | Mapped Tool(s) | Implementation Notes | Evidence Artifact | Status |
 |---|---|---|---|---|---|---|---|
+| AC-2 | Account Management | Access Control | Moderate | Entra ID, Active Directory, CyberArk | Accounts provisioned in AD and synced to Entra ID via Entra Connect. Role-based access assigned via AD security groups. Lifecycle Workflows automate onboarding/offboarding. Privileged accounts managed via CyberArk and Entra PIM with JIT access. | Entra ID audit logs, access review reports, offboarding tickets, AD group membership reports, CyberArk privileged account inventory | Implemented |
+| AC-3 | Access Enforcement | Access Control | Moderate | AWS IAM, Entra ID Conditional Access | Access to resources enforced through AWS IAM policies and Entra ID Conditional Access policies. Role assignments reviewed periodically via Entra ID Access Reviews. | AWS IAM policy documentation, Conditional Access policy export, access review completion reports | Implemented |
+| AC-6 | Least Privilege | Access Control | Moderate | AWS IAM, Entra ID PIM | AWS IAM roles scoped to minimum required permissions. Entra ID PIM enforces JIT elevation for administrative roles — no standing admin access. Role assignments are time-bound and require approval. | AWS IAM role and policy documentation, Entra PIM role assignment reports, JIT activation logs | Implemented |
+| AC-17 | Remote Access | Access Control | Moderate | Entra ID Conditional Access, MFA | Remote access requires MFA via Conditional Access policy. Legacy authentication protocols blocked. Conditional Access enforces compliant device requirement for remote connections. | Conditional Access policy export, sign-in logs showing MFA enforcement, device compliance reports | Implemented |
+| IA-2 | Identification and Authentication (Org Users) | Identification & Authentication | Moderate | Entra ID MFA, Entra ID PIM | All org users authenticated via Entra ID with MFA enforced through Conditional Access. FIDO2 security keys supported for privileged users. Legacy auth blocked. PIM requires MFA at role activation. | Conditional Access policy export, MFA registration report, sign-in logs, PIM settings screenshot | Implemented |
+| IA-5 | Authenticator Management | Identification & Authentication | Moderate | Entra ID, CyberArk | Password policies enforced via Entra ID. Privileged credentials vaulted in CyberArk with automatic rotation. SSPR enabled with identity verification. | Entra ID password policy configuration, CyberArk credential rotation logs, SSPR configuration screenshot | Implemented |
+| IA-8 | Identification and Authentication (Non-Org Users) | Identification & Authentication | Moderate | Entra ID B2B, Guest Access Policies | External users authenticated via Entra ID B2B collaboration. Guest access policies restrict external user permissions. Cross-tenant access settings control inbound and outbound collaboration. | Entra ID B2B configuration, guest access policy export, cross-tenant access settings screenshot | Implemented |
+| AU-2 | Event Logging | Audit & Accountability | Moderate | Microsoft Sentinel, AWS CloudTrail | Entra ID sign-in and audit logs forwarded to Sentinel via Diagnostic Settings. AD security event logs ingested via Azure Monitor Agent. AWS API activity logged in CloudTrail and forwarded to Sentinel. CyberArk session logs forwarded to Sentinel. | Entra ID Diagnostic Settings config, Sentinel data connector status, CloudTrail trail config, sample KQL query results | Implemented |
+| AU-9 | Protection of Audit Information | Audit & Accountability | Moderate | Sentinel Log Analytics, AWS S3 with MFA Delete | Sentinel Log Analytics Workspace restricted via RBAC. AWS CloudTrail logs stored in S3 with MFA Delete enabled. Log file validation enabled in CloudTrail. | Log Analytics Workspace RBAC assignments, S3 bucket policy, MFA Delete configuration, CloudTrail log file validation settings | Implemented |
+| PS-4 | Personnel Termination | Personnel Security | Moderate | Entra ID, Active Directory | Upon termination, accounts disabled in AD and Entra ID within 24 hours per offboarding SOP. Lifecycle Workflows automate account disable and access revocation triggered by HR system. CyberArk privileged access revoked immediately. | Offboarding tickets with timestamps, Entra ID audit logs showing account disable, Lifecycle Workflow execution logs | Implemented |
+| PS-5 | Personnel Transfer | Personnel Security | Moderate | Entra ID, Active Directory | Upon role transfer, access is reviewed and adjusted to reflect new job function. Previous role group memberships removed. Entra ID Access Reviews triggered for transferred users. Privileged access re-evaluated via PIM. | Access review completion reports, AD group membership change logs, Entra ID audit logs, PIM role assignment history | Implemented |
 
 ---
 
@@ -182,7 +191,7 @@ This project focuses on NIST 800-53 Rev. 5. The following cross-references are i
 
 ## Author
 
-**Tyler Leath**    
+**Tyler**  
 GRC & IAM Security | Microsoft SC-300 (In Progress)  
 [LinkedIn](https://www.linkedin.com/in/tyler-leath-a93781143) | [GitHub](https://github.com/tylerleath4-star)
 
